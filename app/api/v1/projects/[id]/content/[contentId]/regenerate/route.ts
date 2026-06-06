@@ -21,7 +21,7 @@ export async function POST(
   // Verify project ownership
   const { data: project, error: projErr } = await supabase
     .from("projects")
-    .select("id, title, channel, transcript")
+    .select("id, title, channel")
     .eq("id", projectId)
     .eq("user_id", userId)
     .maybeSingle();
@@ -42,7 +42,14 @@ export async function POST(
     return NextResponse.json({ error: "Content item not found" }, { status: 404 });
   }
 
-  if (!project.transcript) {
+  // Transcripts are stored in the project_transcripts table
+  const { data: transcriptRow } = await supabase
+    .from("project_transcripts")
+    .select("full_text")
+    .eq("project_id", projectId)
+    .maybeSingle();
+
+  if (!transcriptRow?.full_text) {
     return NextResponse.json({ error: "No transcript available for regeneration" }, { status: 422 });
   }
 
@@ -50,7 +57,7 @@ export async function POST(
   const allContent = await generateContent(
     project.title ?? "Untitled",
     project.channel ?? "Unknown",
-    project.transcript
+    transcriptRow.full_text
   );
 
   const regenerated = allContent.find((c) => c.type === (item.type as ContentType));

@@ -134,7 +134,7 @@ export function UpgradeClient({
 
               <Button
                 className="w-full"
-                variant={tier.highlight ? "default" : "secondary"}
+                variant={tier.highlight ? "primary" : "secondary"}
                 disabled={isCurrent || loading === tier.id}
                 onClick={() => handleUpgrade(tier.id)}
               >

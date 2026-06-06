@@ -9,13 +9,12 @@ import {
   StarOff,
   FileText,
   Mail,
-  Linkedin,
-  Twitter,
   Zap,
   AlignLeft,
   Images,
   MessageSquare,
 } from "lucide-react";
+import { LinkedinIcon, TwitterIcon } from "@/components/shared/brand-icons";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,9 +23,9 @@ import type { DbContentItem, ContentType } from "@/lib/supabase/types";
 import { toast } from "sonner";
 
 const TYPE_META: Record<ContentType, { label: string; icon: React.ElementType; color: string }> = {
-  linkedin: { label: "LinkedIn", icon: Linkedin, color: "text-blue-500" },
+  linkedin: { label: "LinkedIn", icon: LinkedinIcon, color: "text-blue-500" },
   email: { label: "Email", icon: Mail, color: "text-amber-500" },
-  thread: { label: "Thread", icon: Twitter, color: "text-sky-500" },
+  thread: { label: "Thread", icon: TwitterIcon, color: "text-sky-500" },
   hook: { label: "Hook", icon: Zap, color: "text-purple-500" },
   summary: { label: "Summary", icon: AlignLeft, color: "text-green-500" },
   carousel: { label: "Carousel", icon: Images, color: "text-pink-500" },

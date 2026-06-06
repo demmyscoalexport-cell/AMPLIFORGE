@@ -250,34 +250,40 @@ Transactional emails sent via Resend:
 - **Low credits warning** — fires when credits fall below 10% of limit
 - **Plan upgrade confirmation** — fires on Stripe `customer.subscription.updated`
 
-Templates live in `lib/email/` as React Email components.
+Templates live in `lib/email/index.ts` as inline HTML strings (no React Email dep required). All senders gracefully degrade to a console warning if `RESEND_API_KEY` is not set — the app never crashes on missing email config.
+
+**Rate limiting** (`lib/rate-limit.ts`)
+Upstash Redis sliding-window limits applied in middleware for all `/api/v1/*` routes:
+- General tier: 60 requests/minute per user (or IP for unauthenticated)
+- AI tier: 10 requests/minute — applies to processing + regeneration routes
+- Gracefully skipped (all requests pass) if `UPSTASH_REDIS_REST_URL` is not configured.
 
 ---
 
 ## Build Phases
 
-### Phase 1 — Core gaps (MVP-complete) ✅ In progress
+### Phase 1 — Core gaps (MVP-complete) ✅ Done
 - [x] Core pipeline (YouTube → transcript → AI → content)
 - [x] Auth (Clerk + Supabase sync)
 - [x] Dashboard shell, project list, project detail
 - [x] Landing page
-- [ ] /library page
-- [ ] /templates page
-- [ ] /analytics page
-- [ ] /settings page
-- [ ] /upgrade page
-- [ ] Forgot password (actually calls Clerk)
-- [ ] Carousel + caption generation
+- [x] /library page
+- [x] /templates page
+- [x] /analytics page
+- [x] /settings page
+- [x] /upgrade page
+- [x] Forgot password (Clerk `reset_password_email_code` flow)
+- [x] Carousel + caption generation
 
-### Phase 2 — Sellable
-- [ ] Stripe integration (plans + credit top-ups)
-- [ ] Export/download endpoint
-- [ ] Regenerate content endpoint
-- [ ] Rate limiting (Upstash Redis)
-- [ ] Resend email integration
+### Phase 2 — Sellable ✅ Done
+- [x] Stripe integration (plans + credit top-ups)
+- [x] Export/download endpoint (`GET /api/v1/projects/[id]/export`)
+- [x] Regenerate content endpoint (`POST /api/v1/projects/[id]/content/[contentId]/regenerate`)
+- [x] Rate limiting — Upstash Redis sliding window (60 req/min general, 10 req/min AI routes)
+- [x] Resend email integration (welcome, project-complete, low-credits warning)
 
-### Phase 3 — Enterprise
-- [ ] Claude as primary AI (OpenAI fallback)
+### Phase 3 — Enterprise 🔄 In progress
+- [x] Claude `claude-opus-4-8` as primary AI (OpenAI `gpt-4o-mini` fallback, template last resort)
 - [ ] Sentry error monitoring
 - [ ] Real activity feed (DB-backed)
 - [ ] Brand voice training
