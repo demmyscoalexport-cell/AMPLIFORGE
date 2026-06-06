@@ -10,6 +10,7 @@ import {
   finishProcessingJob,
   updateProcessingJob,
 } from "./job-state";
+import { sendProjectCompleteEmail, sendLowCreditsEmail } from "@/lib/email";
 
 interface ProcessProjectInput {
   projectId: string;
@@ -129,6 +130,25 @@ export async function processProject({ projectId, userId }: ProcessProjectInput)
     );
 
     await finishProcessingJob(projectId);
+
+    // Notify user — fetch email + credits in one query
+    const { data: userRow } = await supabase
+      .from("users")
+      .select("email, full_name, credits, credits_limit")
+      .eq("id", userId)
+      .maybeSingle();
+
+    if (userRow?.email) {
+      const firstName = userRow.full_name?.split(" ")[0] ?? "there";
+      void sendProjectCompleteEmail(userRow.email, firstName, metadata.title, projectId);
+
+      // Warn if credits drop below 10% of limit
+      const limit = userRow.credits_limit ?? 500;
+      const remaining = userRow.credits ?? 0;
+      if (remaining <= Math.max(limit * 0.1, 50)) {
+        void sendLowCreditsEmail(userRow.email, firstName, remaining);
+      }
+    }
   } catch (err) {
     const message = err instanceof Error ? err.message : "Processing failed";
     console.error(`processProject(${projectId}) failed:`, err);

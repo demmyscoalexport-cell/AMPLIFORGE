@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { sendWelcomeEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -71,22 +72,26 @@ export async function POST(req: Request) {
   const user = event.data;
 
   switch (event.type) {
-    case "user.created":
+    case "user.created": {
+      const email = primaryEmail(user);
+      const { error } = await supabase.from("users").upsert(
+        [{ id: user.id, email, full_name: fullName(user), username: user.username ?? null, avatar_url: user.image_url ?? null }],
+        { onConflict: "id" }
+      );
+      if (error) {
+        console.error("Supabase upsert failed:", error);
+        return NextResponse.json({ error: "DB upsert failed" }, { status: 500 });
+      }
+      // Fire welcome email — non-blocking, failures are logged but not surfaced
+      void sendWelcomeEmail(email, user.first_name ?? "there");
+      return NextResponse.json({ ok: true, action: event.type, id: user.id });
+    }
+
     case "user.updated": {
-      const { error } = await supabase
-        .from("users")
-        .upsert(
-          [
-            {
-              id: user.id,
-              email: primaryEmail(user),
-              full_name: fullName(user),
-              username: user.username ?? null,
-              avatar_url: user.image_url ?? null,
-            },
-          ],
-          { onConflict: "id" }
-        );
+      const { error } = await supabase.from("users").upsert(
+        [{ id: user.id, email: primaryEmail(user), full_name: fullName(user), username: user.username ?? null, avatar_url: user.image_url ?? null }],
+        { onConflict: "id" }
+      );
       if (error) {
         console.error("Supabase upsert failed:", error);
         return NextResponse.json({ error: "DB upsert failed" }, { status: 500 });

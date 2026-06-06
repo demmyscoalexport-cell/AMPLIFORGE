@@ -37,11 +37,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <span className="text-[var(--text-primary)] font-medium truncate max-w-[420px]">{project.title}</span>
         </div>
 
-        <Button size="md">
-          <Download className="h-4 w-4" />
-          Export All ({outputsCount})
-          <ChevronDown className="h-3.5 w-3.5" />
-        </Button>
+        <a href={`/api/v1/projects/${id}/export`} download>
+          <Button size="md">
+            <Download className="h-4 w-4" />
+            Export All ({outputsCount})
+          </Button>
+        </a>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr_minmax(0,560px)] xl:grid-cols-[380px_1fr_minmax(0,640px)] gap-6">
@@ -59,7 +60,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         </section>
 
         <section>
-          <OutputTabs content={content} />
+          <OutputTabs content={content} projectId={project.id} />
         </section>
       </div>
     </div>

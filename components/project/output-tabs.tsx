@@ -17,6 +17,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { DbContentItem, ContentType } from "@/lib/supabase/types";
 
+function downloadTxt(projectId: string, itemId: string, type: string) {
+  const url = `/api/v1/projects/${projectId}/export?type=${type}&format=txt`;
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "";
+  a.click();
+}
+
+async function regenerateItem(
+  projectId: string,
+  contentId: string
+): Promise<DbContentItem | null> {
+  const res = await fetch(
+    `/api/v1/projects/${projectId}/content/${contentId}/regenerate`,
+    { method: "POST" }
+  );
+  if (!res.ok) return null;
+  const data = (await res.json()) as { item?: DbContentItem };
+  return data.item ?? null;
+}
+
 const TABS: { value: ContentType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { value: "email", label: "Emails", icon: Mail },
   { value: "linkedin", label: "LinkedIn", icon: Linkedin },
@@ -26,20 +47,41 @@ const TABS: { value: ContentType; label: string; icon: React.ComponentType<{ cla
   { value: "summary", label: "Summary", icon: FileText },
 ];
 
-export function OutputTabs({ content }: { content: DbContentItem[] }) {
-  const [regenKey, setRegenKey] = React.useState(0);
-  const firstAvailable = TABS.find((t) => content.some((c) => c.type === t.value))?.value ?? "email";
+export function OutputTabs({
+  content: initialContent,
+  projectId,
+}: {
+  content: DbContentItem[];
+  projectId: string;
+}) {
+  const [items, setItems] = React.useState<DbContentItem[]>(initialContent);
+  const [regenLoading, setRegenLoading] = React.useState<string | null>(null);
+  const firstAvailable = TABS.find((t) => items.some((c) => c.type === t.value))?.value ?? "email";
 
   const onCopy = (body: string) => {
     if (typeof navigator !== "undefined") navigator.clipboard?.writeText(body);
     toast.success("Copied to clipboard", { description: "Ready to paste into your editor." });
   };
-  const onRegenerate = () => {
-    setRegenKey((k) => k + 1);
-    toast.success("Regenerating…", { description: "AmpliForge is rewriting with a fresh angle." });
+
+  const onRegenerate = async (itemId: string) => {
+    setRegenLoading(itemId);
+    const toastId = toast.loading("Regenerating…", {
+      description: "AmpliForge is rewriting with a fresh angle.",
+    });
+    const updated = await regenerateItem(projectId, itemId);
+    setRegenLoading(null);
+    if (updated) {
+      setItems((prev) => prev.map((i) => (i.id === itemId ? updated : i)));
+      toast.success("Done!", { id: toastId, description: "Content regenerated successfully." });
+    } else {
+      toast.error("Regeneration failed", {
+        id: toastId,
+        description: "Could not regenerate. Try again in a moment.",
+      });
+    }
   };
 
-  if (content.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--elevated)] p-12 text-center">
         <Sparkles className="h-8 w-8 mx-auto text-[var(--brand-purple)] mb-3" />
@@ -63,7 +105,8 @@ export function OutputTabs({ content }: { content: DbContentItem[] }) {
       </TabsList>
 
       {TABS.map((tab) => {
-        const item = content.find((c) => c.type === tab.value);
+        const item = items.find((c) => c.type === tab.value);
+        const isRegenerating = item ? regenLoading === item.id : false;
         return (
           <TabsContent key={tab.value} value={tab.value} className="flex-1">
             {!item ? (
@@ -82,20 +125,26 @@ export function OutputTabs({ content }: { content: DbContentItem[] }) {
                     <Button size="sm" variant="secondary" onClick={() => onCopy(item.body)}>
                       <Copy className="h-3 w-3" /> Copy
                     </Button>
-                    <Button size="sm" variant="secondary" onClick={onRegenerate}>
-                      <RotateCw className="h-3 w-3" /> Regenerate
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      disabled={isRegenerating}
+                      onClick={() => onRegenerate(item.id)}
+                    >
+                      <RotateCw className={`h-3 w-3 ${isRegenerating ? "animate-spin" : ""}`} />
+                      {isRegenerating ? "Regenerating…" : "Regenerate"}
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button size="sm" variant="secondary">
+                        <Button size="sm" variant="secondary" disabled={isRegenerating}>
                           <Sparkles className="h-3 w-3" /> AI Improve <ChevronDown className="h-3 w-3" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onSelect={onRegenerate}>Make shorter</DropdownMenuItem>
-                        <DropdownMenuItem onSelect={onRegenerate}>Make more engaging</DropdownMenuItem>
-                        <DropdownMenuItem onSelect={onRegenerate}>Add emojis</DropdownMenuItem>
-                        <DropdownMenuItem onSelect={onRegenerate}>More professional</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onRegenerate(item.id)}>Make shorter</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onRegenerate(item.id)}>Make more engaging</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onRegenerate(item.id)}>Add emojis</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onRegenerate(item.id)}>More professional</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                     <DropdownMenu>
@@ -106,7 +155,7 @@ export function OutputTabs({ content }: { content: DbContentItem[] }) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onSelect={() => onCopy(item.body)}>Copy to clipboard</DropdownMenuItem>
-                        <DropdownMenuItem>Download .txt</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => downloadTxt(projectId, item.id, item.type)}>Download .txt</DropdownMenuItem>
                         <DropdownMenuItem>Download .docx</DropdownMenuItem>
                         <DropdownMenuItem>Send to Notion</DropdownMenuItem>
                         <DropdownMenuItem>Send to Buffer</DropdownMenuItem>
@@ -115,7 +164,7 @@ export function OutputTabs({ content }: { content: DbContentItem[] }) {
                   </div>
                 </div>
 
-                <div key={regenKey} className="p-5">
+                <div className="p-5">
                   {tab.value === "linkedin" ? (
                     <LinkedInPreview body={item.body} />
                   ) : tab.value === "email" ? (
