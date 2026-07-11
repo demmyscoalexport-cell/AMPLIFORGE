@@ -123,6 +123,167 @@
 }
 
 /* =========================================================================
+   Design tokens — Phase 0 (enterprise 3-tier)
+   Generated from /tokens/{primitive,semantic,component}.json (DTCG).
+   ADDITIVE + backward-compatible: existing variables above are untouched and
+   kept as aliases. New primitive ramps + semantic/component tokens below.
+   ========================================================================= */
+
+/* --- Primitive tier: color ramps + scales (theme-independent) --- */
+:root {
+  /* Blue */
+  --blue-50: #eaf2fc; --blue-100: #d0e1f8; --blue-200: #a6c7f0; --blue-300: #74a6e6;
+  --blue-400: #3d82db; --blue-500: #1b72d6; --blue-600: #0d66d0; --blue-700: #0b54ac;
+  --blue-800: #0c468b; --blue-900: #0e3b72; --blue-950: #0a2647;
+  /* Purple */
+  --purple-50: #f4eefc; --purple-100: #e7daf8; --purple-200: #d0b8f1; --purple-300: #b98fe9;
+  --purple-400: #a570e1; --purple-500: #9256d9; --purple-600: #7e3fc9; --purple-700: #6832a6;
+  --purple-800: #522982; --purple-900: #402066; --purple-950: #2a1444;
+  /* Crimson */
+  --crimson-50: #fdeced; --crimson-100: #fbd5d7; --crimson-200: #f7abb0; --crimson-300: #f17e85;
+  --crimson-400: #ea5b63; --crimson-500: #e34850; --crimson-600: #c7343c; --crimson-700: #a32930;
+  --crimson-800: #822227; --crimson-900: #6b1e22; --crimson-950: #400f12;
+  /* Gold */
+  --gold-50: #fbf6e7; --gold-100: #f6ebc4; --gold-200: #edd78b; --gold-300: #e4c558;
+  --gold-400: #dcb944; --gold-500: #d4af37; --gold-600: #b8942a; --gold-700: #937323;
+  --gold-800: #6f5820; --gold-900: #5a481e; --gold-950: #33280f;
+  /* Neutral */
+  --neutral-0: #ffffff; --neutral-50: #fafafa; --neutral-100: #f4f4f5; --neutral-200: #e4e4e7;
+  --neutral-300: #d4d4d8; --neutral-400: #a1a1aa; --neutral-500: #71717a; --neutral-600: #52525b;
+  --neutral-700: #3f3f46; --neutral-800: #27272a; --neutral-850: #202020; --neutral-900: #181818;
+  --neutral-925: #111111; --neutral-950: #0a0a0a;
+
+  /* Z-index scale */
+  --z-base: 0; --z-raised: 10; --z-sticky: 1100; --z-overlay: 1200;
+  --z-modal: 1300; --z-popover: 1400; --z-toast: 1500;
+
+  /* Motion tokens */
+  --motion-duration-instant: 0ms;
+  --motion-duration-fast: 120ms;
+  --motion-duration-base: 200ms;
+  --motion-duration-slow: 320ms;
+  --motion-duration-slower: 500ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --motion-ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --motion-ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+
+  /* Fluent-inspired blur (acrylic depth) */
+  --blur-sm: 12px; --blur-md: 20px; --blur-lg: 28px;
+
+  /* Component tokens — button brand elevation (brand glow, theme-independent) */
+  --shadow-button-primary: 0 4px 14px rgba(13, 102, 208, 0.35);
+  --shadow-button-primary-hover: 0 8px 24px rgba(13, 102, 208, 0.45);
+  --shadow-button-gold: 0 4px 14px rgba(212, 175, 55, 0.35);
+  --shadow-button-gold-hover: 0 8px 24px rgba(212, 175, 55, 0.45);
+}
+
+/* --- Semantic tier: light theme (default :root, matches existing) --- */
+:root {
+  --surface-bg-base: var(--neutral-0);
+  --surface-bg-secondary: var(--neutral-50);
+  --surface-elevated: var(--neutral-0);
+  --surface-overlay: rgba(24, 24, 27, 0.48);
+
+  --text-on-brand: #ffffff;
+  --text-inverse: #fafafa;
+  --border-strong: var(--neutral-300);
+
+  --brand-primary: var(--blue-600);
+  --brand-secondary: var(--purple-500);
+  --brand-accent: var(--crimson-500);
+  --brand-premium: var(--gold-600);
+
+  --status-success: #059669; --status-success-subtle: rgba(16, 185, 129, 0.12);
+  --status-warning: #d97706; --status-warning-subtle: rgba(245, 158, 11, 0.12);
+  --status-danger: #dc2626;  --status-danger-subtle: rgba(239, 68, 68, 0.12);
+  --status-info: #2563eb;    --status-info-subtle: rgba(59, 130, 246, 0.12);
+  --status-processing: var(--blue-600);
+
+  --interactive-focus-ring: var(--blue-600);
+  --hover-overlay: rgba(0, 0, 0, 0.04);
+  --active-overlay: rgba(0, 0, 0, 0.08);
+  --disabled-fg: rgba(24, 24, 27, 0.38);
+}
+
+/* --- Semantic tier: dark theme overrides (default runtime theme) --- */
+.dark {
+  --surface-bg-base: var(--neutral-950);
+  --surface-bg-secondary: var(--neutral-925);
+  --surface-elevated: var(--neutral-850);
+  --surface-overlay: rgba(10, 10, 10, 0.72);
+
+  --text-on-brand: #ffffff;
+  --text-inverse: var(--neutral-900);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --brand-premium: var(--gold-500);
+
+  --status-success: #10b981; --status-success-subtle: rgba(16, 185, 129, 0.14);
+  --status-warning: #f59e0b; --status-warning-subtle: rgba(245, 158, 11, 0.14);
+  --status-danger: #ef4444;  --status-danger-subtle: rgba(239, 68, 68, 0.14);
+  --status-info: #3b82f6;    --status-info-subtle: rgba(59, 130, 246, 0.14);
+  --status-processing: var(--blue-500);
+
+  --hover-overlay: rgba(255, 255, 255, 0.06);
+  --active-overlay: rgba(255, 255, 255, 0.10);
+  --disabled-fg: rgba(255, 255, 255, 0.38);
+}
+
+/* --- Tailwind v4 mapping for the new tokens (utilities like bg-blue-600, bg-brand-primary, ease-standard) --- */
+@theme inline {
+  --color-blue-50: var(--blue-50); --color-blue-100: var(--blue-100); --color-blue-200: var(--blue-200);
+  --color-blue-300: var(--blue-300); --color-blue-400: var(--blue-400); --color-blue-500: var(--blue-500);
+  --color-blue-600: var(--blue-600); --color-blue-700: var(--blue-700); --color-blue-800: var(--blue-800);
+  --color-blue-900: var(--blue-900); --color-blue-950: var(--blue-950);
+
+  --color-purple-50: var(--purple-50); --color-purple-100: var(--purple-100); --color-purple-200: var(--purple-200);
+  --color-purple-300: var(--purple-300); --color-purple-400: var(--purple-400); --color-purple-500: var(--purple-500);
+  --color-purple-600: var(--purple-600); --color-purple-700: var(--purple-700); --color-purple-800: var(--purple-800);
+  --color-purple-900: var(--purple-900); --color-purple-950: var(--purple-950);
+
+  --color-crimson-50: var(--crimson-50); --color-crimson-100: var(--crimson-100); --color-crimson-200: var(--crimson-200);
+  --color-crimson-300: var(--crimson-300); --color-crimson-400: var(--crimson-400); --color-crimson-500: var(--crimson-500);
+  --color-crimson-600: var(--crimson-600); --color-crimson-700: var(--crimson-700); --color-crimson-800: var(--crimson-800);
+  --color-crimson-900: var(--crimson-900); --color-crimson-950: var(--crimson-950);
+
+  --color-gold-50: var(--gold-50); --color-gold-100: var(--gold-100); --color-gold-200: var(--gold-200);
+  --color-gold-300: var(--gold-300); --color-gold-400: var(--gold-400); --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600); --color-gold-700: var(--gold-700); --color-gold-800: var(--gold-800);
+  --color-gold-900: var(--gold-900); --color-gold-950: var(--gold-950);
+
+  --color-neutral-0: var(--neutral-0); --color-neutral-50: var(--neutral-50); --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200); --color-neutral-300: var(--neutral-300); --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500); --color-neutral-600: var(--neutral-600); --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800); --color-neutral-850: var(--neutral-850); --color-neutral-900: var(--neutral-900);
+  --color-neutral-925: var(--neutral-925); --color-neutral-950: var(--neutral-950);
+
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-premium: var(--brand-premium);
+
+  --color-surface-base: var(--surface-bg-base);
+  --color-surface-secondary: var(--surface-bg-secondary);
+  --color-surface-elevated: var(--surface-elevated);
+
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-danger: var(--status-danger);
+  --color-status-info: var(--status-info);
+  --color-status-processing: var(--status-processing);
+
+  --ease-standard: var(--motion-ease-standard);
+  --ease-emphasized: var(--motion-ease-emphasized);
+  --ease-decelerate: var(--motion-ease-decelerate);
+  --ease-accelerate: var(--motion-ease-accelerate);
+
+  --blur-sm: var(--blur-sm);
+  --blur-md: var(--blur-md);
+  --blur-lg: var(--blur-lg);
+}
+
+/* =========================================================================
    Base
    ========================================================================= */
 * {

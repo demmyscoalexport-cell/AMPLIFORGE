@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.designtokens.org/2023",
+  "$description": "AmpliForge COMPONENT tokens. Reference SEMANTIC tokens only. Restyling a component = changing a token here, not editing CVA/markup. Values use {semantic...} refs resolved per active theme.",
+  "button": {
+    "$type": "color",
+    "radius":         { "$value": "{dimension.radius.full}", "$type": "dimension" },
+    "height-sm":      { "$value": "32px", "$type": "dimension" },
+    "height-md":      { "$value": "40px", "$type": "dimension" },
+    "height-lg":      { "$value": "48px", "$type": "dimension" },
+    "height-xl":      { "$value": "56px", "$type": "dimension" },
+    "primary-bg":     { "$value": "{gradient.hero}", "$type": "other" },
+    "primary-fg":     { "$value": "{dark.text.on-brand}" },
+    "primary-shadow": { "$value": "0 4px 14px rgba(13,102,208,0.35)", "$type": "shadow" },
+    "secondary-bg":   { "$value": "{dark.surface.surface}" },
+    "secondary-fg":   { "$value": "{dark.text.primary}" },
+    "secondary-border": { "$value": "{dark.border.default}" },
+    "ghost-fg":       { "$value": "{dark.text.secondary}" },
+    "ghost-hover-bg": { "$value": "{dark.interactive.hover-overlay}" },
+    "gold-bg":        { "$value": "{gradient.gold}", "$type": "other" },
+    "gold-fg":        { "$value": "{color.neutral.900}" },
+    "danger-bg":      { "$value": "{dark.status.danger}" },
+    "danger-fg":      { "$value": "{dark.text.on-brand}" },
+    "focus-ring":     { "$value": "{dark.interactive.focus-ring}" }
+  },
+  "card": {
+    "$type": "color",
+    "bg":     { "$value": "{dark.surface.elevated}" },
+    "border": { "$value": "{dark.border.default}" },
+    "radius": { "$value": "{dimension.radius.lg}", "$type": "dimension" },
+    "shadow": { "$value": "{shadow.md}", "$type": "shadow" },
+    "padding": { "$value": "{dimension.space.7}", "$type": "dimension" }
+  },
+  "input": {
+    "$type": "color",
+    "bg":            { "$value": "{dark.surface.bg-base}" },
+    "border":        { "$value": "{dark.border.default}" },
+    "border-focus":  { "$value": "{dark.brand.primary}" },
+    "fg":            { "$value": "{dark.text.primary}" },
+    "placeholder":   { "$value": "{dark.text.muted}" },
+    "radius":        { "$value": "{dimension.radius.md}", "$type": "dimension" },
+    "height":        { "$value": "44px", "$type": "dimension" }
+  },
+  "tab": {
+    "$type": "color",
+    "fg":            { "$value": "{dark.text.muted}" },
+    "fg-active":     { "$value": "{dark.text.primary}" },
+    "indicator":     { "$value": "{dark.brand.primary}" }
+  },
+  "badge": {
+    "$type": "color",
+    "radius":         { "$value": "{dimension.radius.full}", "$type": "dimension" },
+    "success-bg":     { "$value": "{dark.status.success-subtle}" },
+    "success-fg":     { "$value": "{dark.status.success}" },
+    "warning-bg":     { "$value": "{dark.status.warning-subtle}" },
+    "warning-fg":     { "$value": "{dark.status.warning}" },
+    "danger-bg":      { "$value": "{dark.status.danger-subtle}" },
+    "danger-fg":      { "$value": "{dark.status.danger}" },
+    "processing-bg":  { "$value": "{dark.status.info-subtle}" },
+    "processing-fg":  { "$value": "{dark.status.processing}" }
+  },
+  "progress": {
+    "$type": "color",
+    "track":     { "$value": "{dark.border.default}" },
+    "indicator": { "$value": "{gradient.hero}", "$type": "other" },
+    "height":    { "$value": "8px", "$type": "dimension" }
+  },
+  "sidebar": {
+    "$type": "color",
+    "bg":         { "$value": "{dark.surface.bg-secondary}" },
+    "border":     { "$value": "{dark.border.subtle}" },
+    "width":      { "$value": "{dimension.layout.sidebar-width}", "$type": "dimension" },
+    "item-fg":    { "$value": "{dark.text.secondary}" },
+    "item-hover": { "$value": "{dark.interactive.hover-overlay}" },
+    "item-active-fg": { "$value": "{dark.text.primary}" }
+  },
+  "modal": {
+    "$type": "color",
+    "bg":      { "$value": "{dark.surface.elevated}" },
+    "overlay": { "$value": "{dark.surface.overlay}" },
+    "radius":  { "$value": "{dimension.radius.xl}", "$type": "dimension" },
+    "shadow":  { "$value": "{shadow.lg}", "$type": "shadow" }
+  }
+}
