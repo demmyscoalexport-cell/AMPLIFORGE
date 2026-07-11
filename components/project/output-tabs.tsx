@@ -3,7 +3,7 @@
 import * as React from "react";
 import { toast } from "sonner";
 import {
-  Copy, RotateCw, Sparkles, Download, FileText, Mail, MessageCircle, Hash, Quote, ChevronDown,
+  Copy, RotateCw, Sparkles, Download, FileText, Mail, MessageCircle, Hash, Quote, ChevronDown, Images,
 } from "lucide-react";
 import { LinkedinIcon as Linkedin } from "@/components/shared/brand-icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -45,6 +45,7 @@ const TABS: { value: ContentType; label: string; icon: React.ComponentType<{ cla
   { value: "caption", label: "Captions", icon: Hash },
   { value: "hook", label: "Hooks", icon: Quote },
   { value: "summary", label: "Summary", icon: FileText },
+  { value: "carousel", label: "Carousel", icon: Images },
 ];
 
 export function OutputTabs({
@@ -83,8 +84,8 @@ export function OutputTabs({
 
   if (items.length === 0) {
     return (
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--elevated)] p-12 text-center">
-        <Sparkles className="h-8 w-8 mx-auto text-[var(--brand-purple)] mb-3" />
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-12 text-center">
+        <Sparkles className="h-8 w-8 mx-auto text-[var(--brand-secondary)] mb-3" />
         <h3 className="text-base font-semibold">No outputs yet</h3>
         <p className="text-sm text-[var(--text-muted)] mt-1">
           Outputs will appear here once processing finishes.
@@ -169,6 +170,8 @@ export function OutputTabs({
                     <LinkedInPreview body={item.body} />
                   ) : tab.value === "email" ? (
                     <EmailPreview body={item.body} />
+                  ) : tab.value === "carousel" ? (
+                    <CarouselPreview body={item.body} />
                   ) : (
                     <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-[var(--text-primary)]">
                       {item.body}
@@ -186,9 +189,9 @@ export function OutputTabs({
 
 function LinkedInPreview({ body }: { body: string }) {
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 max-w-[560px]">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-bg-base)] p-4 max-w-[560px]">
       <div className="flex items-center gap-2 mb-3">
-        <div className="h-10 w-10 rounded-full bg-gradient-hero text-white text-xs font-bold flex items-center justify-center">
+        <div className="h-10 w-10 rounded-full bg-gradient-hero text-[var(--text-on-brand)] text-xs font-bold flex items-center justify-center">
           AR
         </div>
         <div>
@@ -212,7 +215,7 @@ function EmailPreview({ body }: { body: string }) {
   const subject = isSubject ? subjectLine.replace(/^subject:\s*/i, "") : "Your AmpliForge digest";
   const bodyText = isSubject ? rest.join("\n").trim() : body;
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] overflow-hidden max-w-[560px]">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-bg-base)] overflow-hidden max-w-[560px]">
       <div className="px-4 py-2 border-b border-[var(--border)] bg-[var(--surface)] text-xs text-[var(--text-muted)] flex justify-between">
         <span>From: you@studio.com</span>
         <span>To: subscriber@inbox.com</span>
@@ -225,6 +228,59 @@ function EmailPreview({ body }: { body: string }) {
           {bodyText}
         </pre>
       </div>
+    </div>
+  );
+}
+
+function CarouselPreview({ body }: { body: string }) {
+  let slides = body
+    .split(/\n{2,}(?=Slide\s+\d+)/i)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (slides.length <= 1) {
+    slides = body
+      .split(/(?=Slide\s+\d+\s*[—:-])/i)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  if (slides.length <= 1) {
+    return (
+      <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-[var(--text-primary)]">
+        {body}
+      </pre>
+    );
+  }
+
+  return (
+    <div>
+      <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3">
+        {slides.map((slide, i) => {
+          const [heading, ...rest] = slide.split("\n");
+          const caption = rest.join("\n").trim();
+          return (
+            <div
+              key={i}
+              className="relative flex aspect-square w-[260px] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-2xl border border-[var(--border)] bg-gradient-hero p-5 text-[var(--text-on-brand)] shadow-card"
+            >
+              <span className="text-[10px] font-semibold uppercase tracking-widest opacity-80">
+                {i + 1} / {slides.length}
+              </span>
+              <div>
+                <p className="text-base font-semibold leading-snug">{heading}</p>
+                {caption && (
+                  <p className="mt-2 whitespace-pre-wrap text-xs leading-relaxed opacity-90">
+                    {caption}
+                  </p>
+                )}
+              </div>
+              <Images className="h-4 w-4 opacity-70" />
+            </div>
+          );
+        })}
+      </div>
+      <p className="mt-1 text-xs text-[var(--text-muted)]">
+        {slides.length} slides · scroll horizontally to preview
+      </p>
     </div>
   );
 }
