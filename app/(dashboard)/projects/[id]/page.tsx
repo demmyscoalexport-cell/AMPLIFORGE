@@ -50,7 +50,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <VideoPlayer project={project} outputsCount={outputsCount} />
         </aside>
 
-        <section className="rounded-2xl border border-[var(--border)] bg-[var(--elevated)] p-5">
+        <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--text-muted)]">
               Transcript

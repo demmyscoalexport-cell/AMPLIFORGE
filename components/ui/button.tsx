@@ -11,18 +11,18 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-gradient-hero text-white shadow-[0_4px_14px_rgba(13,102,208,0.35)] hover:shadow-[0_8px_24px_rgba(13,102,208,0.45)] hover:-translate-y-px active:translate-y-0",
+          "bg-gradient-hero text-[var(--text-on-brand)] shadow-[var(--shadow-button-primary)] hover:shadow-[var(--shadow-button-primary-hover)] hover:-translate-y-px active:translate-y-0",
         secondary:
-          "bg-[var(--surface)] text-[var(--text-primary)] border border-[var(--border)] hover:bg-[var(--elevated)] hover:border-[var(--text-muted)]/30",
+          "bg-[var(--surface)] text-[var(--text-primary)] border border-[var(--border)] hover:bg-[var(--elevated)] hover:border-[var(--border-strong)]",
         ghost:
-          "text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]",
+          "text-[var(--text-secondary)] hover:bg-[var(--hover-overlay)] hover:text-[var(--text-primary)]",
         outline:
           "border border-[var(--border)] bg-transparent text-[var(--text-primary)] hover:bg-[var(--surface)]",
         gold:
-          "bg-gradient-gold text-zinc-900 shadow-[0_4px_14px_rgba(212,175,55,0.35)] hover:shadow-[0_8px_24px_rgba(212,175,55,0.45)] hover:-translate-y-px",
+          "bg-gradient-gold text-[var(--text-inverse)] shadow-[var(--shadow-button-gold)] hover:shadow-[var(--shadow-button-gold-hover)] hover:-translate-y-px",
         danger:
-          "bg-[var(--danger)] text-white hover:opacity-90",
-        link: "text-[var(--brand-blue)] underline-offset-4 hover:underline",
+          "bg-[var(--status-danger)] text-[var(--text-on-brand)] hover:opacity-90",
+        link: "text-[var(--brand-primary)] underline-offset-4 hover:underline",
       },
       size: {
         sm: "h-8 px-3 text-xs",

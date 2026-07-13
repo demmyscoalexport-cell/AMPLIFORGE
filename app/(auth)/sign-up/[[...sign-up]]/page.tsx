@@ -23,7 +23,7 @@ export default function SignUpPage() {
         routing="path"
         path="/sign-up"
         signInUrl="/sign-in"
-        fallbackRedirectUrl="/dashboard"
+        fallbackRedirectUrl="/onboarding"
       />
 
       <div className="mt-6 pt-6 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-xs text-[var(--text-muted)]">

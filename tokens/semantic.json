@@ -1,0 +1,106 @@
+{
+  "$schema": "https://schemas.designtokens.org/2023",
+  "$description": "AmpliForge SEMANTIC (system) tokens. Reference primitive tokens and express intent (surface, text, border, brand, status, interactive). Dark is the default theme; light is the fallback. Component tokens and app code consume THESE, never primitives directly.",
+  "dark": {
+    "$description": "Default theme (matches ThemeProvider defaultTheme=\"dark\").",
+    "surface": {
+      "$type": "color",
+      "bg-base":      { "$value": "{color.neutral.950}" },
+      "bg-secondary": { "$value": "{color.neutral.925}" },
+      "surface":      { "$value": "{color.neutral.900}" },
+      "elevated":     { "$value": "{color.neutral.850}" },
+      "overlay":      { "$value": "rgba(10,10,10,0.72)" }
+    },
+    "text": {
+      "$type": "color",
+      "primary":   { "$value": "#fafafa" },
+      "secondary": { "$value": "#cacaca" },
+      "muted":     { "$value": "#8e8e8e" },
+      "on-brand":  { "$value": "#ffffff" },
+      "inverse":   { "$value": "{color.neutral.900}" }
+    },
+    "border": {
+      "$type": "color",
+      "default": { "$value": "rgba(255,255,255,0.08)" },
+      "subtle":  { "$value": "rgba(255,255,255,0.04)" },
+      "strong":  { "$value": "rgba(255,255,255,0.16)" }
+    },
+    "brand": {
+      "$type": "color",
+      "primary":   { "$value": "{color.blue.600}" },
+      "secondary": { "$value": "{color.purple.500}" },
+      "accent":    { "$value": "{color.crimson.500}" },
+      "premium":   { "$value": "{color.gold.500}" }
+    },
+    "status": {
+      "$type": "color",
+      "success":        { "$value": "{color.green.500}" },
+      "success-subtle": { "$value": "rgba(16,185,129,0.14)" },
+      "warning":        { "$value": "{color.amber.500}" },
+      "warning-subtle": { "$value": "rgba(245,158,11,0.14)" },
+      "danger":         { "$value": "{color.red.500}" },
+      "danger-subtle":  { "$value": "rgba(239,68,68,0.14)" },
+      "info":           { "$value": "{color.sky.500}" },
+      "info-subtle":    { "$value": "rgba(59,130,246,0.14)" },
+      "processing":     { "$value": "{color.blue.500}" }
+    },
+    "interactive": {
+      "$type": "color",
+      "focus-ring":     { "$value": "{color.blue.600}" },
+      "hover-overlay":  { "$value": "rgba(255,255,255,0.06)" },
+      "active-overlay": { "$value": "rgba(255,255,255,0.10)" },
+      "disabled-fg":    { "$value": "rgba(255,255,255,0.38)" }
+    }
+  },
+  "light": {
+    "$description": "Light fallback theme.",
+    "surface": {
+      "$type": "color",
+      "bg-base":      { "$value": "{color.neutral.0}" },
+      "bg-secondary": { "$value": "{color.neutral.50}" },
+      "surface":      { "$value": "{color.neutral.100}" },
+      "elevated":     { "$value": "{color.neutral.0}" },
+      "overlay":      { "$value": "rgba(24,24,27,0.48)" }
+    },
+    "text": {
+      "$type": "color",
+      "primary":   { "$value": "{color.neutral.900}" },
+      "secondary": { "$value": "{color.neutral.600}" },
+      "muted":     { "$value": "{color.neutral.500}" },
+      "on-brand":  { "$value": "#ffffff" },
+      "inverse":   { "$value": "#fafafa" }
+    },
+    "border": {
+      "$type": "color",
+      "default": { "$value": "{color.neutral.200}" },
+      "subtle":  { "$value": "rgba(0,0,0,0.06)" },
+      "strong":  { "$value": "{color.neutral.300}" }
+    },
+    "brand": {
+      "$type": "color",
+      "primary":   { "$value": "{color.blue.600}" },
+      "secondary": { "$value": "{color.purple.500}" },
+      "accent":    { "$value": "{color.crimson.500}" },
+      "premium":   { "$value": "{color.gold.600}" }
+    },
+    "status": {
+      "$type": "color",
+      "success":        { "$value": "{color.green.600}" },
+      "success-subtle": { "$value": "rgba(16,185,129,0.12)" },
+      "warning":        { "$value": "{color.amber.600}" },
+      "warning-subtle": { "$value": "rgba(245,158,11,0.12)" },
+      "danger":         { "$value": "{color.red.600}" },
+      "danger-subtle":  { "$value": "rgba(239,68,68,0.12)" },
+      "info":           { "$value": "{color.sky.600}" },
+      "info-subtle":    { "$value": "rgba(59,130,246,0.12)" },
+      "processing":     { "$value": "{color.blue.600}" }
+    },
+    "interactive": {
+      "$type": "color",
+      "focus-ring":     { "$value": "{color.blue.600}" },
+      "hover-overlay":  { "$value": "rgba(0,0,0,0.04)" },
+      "active-overlay": { "$value": "rgba(0,0,0,0.08)" },
+      "disabled-fg":    { "$value": "rgba(24,24,27,0.38)" }
+    }
+  }
+}

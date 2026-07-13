@@ -7,10 +7,10 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
       type={type}
       ref={ref}
       className={cn(
-        "flex h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2 text-sm",
+        "flex h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-bg-base)] px-4 py-2 text-sm",
         "placeholder:text-[var(--text-muted)] text-[var(--text-primary)]",
         "transition-all duration-200",
-        "focus:border-[var(--brand-blue)] focus:ring-4 focus:ring-[var(--brand-blue)]/10",
+        "focus:border-[var(--brand-primary)] focus:ring-4 focus:ring-[var(--brand-primary)]/10",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "file:border-0 file:bg-transparent file:text-sm file:font-medium",
         className
@@ -26,10 +26,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTML
     <textarea
       ref={ref}
       className={cn(
-        "flex min-h-[100px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-3 text-sm",
+        "flex min-h-[100px] w-full rounded-xl border border-[var(--border)] bg-[var(--surface-bg-base)] px-4 py-3 text-sm",
         "placeholder:text-[var(--text-muted)] text-[var(--text-primary)]",
         "transition-all duration-200 resize-y",
-        "focus:border-[var(--brand-blue)] focus:ring-4 focus:ring-[var(--brand-blue)]/10",
+        "focus:border-[var(--brand-primary)] focus:ring-4 focus:ring-[var(--brand-primary)]/10",
         "disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
