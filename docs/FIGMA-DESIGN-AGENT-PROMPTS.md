@@ -1,354 +1,289 @@
 # Figma Design Agent — Ampliforge Prompt Pack
 
-You design in Figma with a **Design Agent** + **Untitled UI** (paid).  
-I write **long, detailed prompts**. You paste them into the agent one screen (or flow) at a time.
+> **For Cursor Desktop:** This file is the source of truth for all Figma Design Agent prompts. When the user asks for the “next prompt,” “Figma prompt,” or design setup, read this file and give them the next uncompleted prompt to paste into Figma.
 
-**How to use**
-1. Duplicate Untitled UI → Ampliforge working file (never edit the master kit).
-2. Paste **PROMPT 0 (System)** once at the start of a session (or pin it as custom instructions).
-3. Paste **one screen prompt** (PROMPT 1, 2, …) per generation. Do not combine screens in one run.
-4. After each result: restyle onto Untitled components if the agent drew custom chrome; keep Auto Layout; name frames for handoff.
-5. Send me: Figma link + frame names when ready to implement.
+**Workflow:** User designs in Figma (Untitled UI + Design Agent). Cursor writes prompts + implements approved frames in code.
 
-**Design order (matches build roadmap)**  
-0 System → 1 Review studio → 2 Processing wow → 3 Onboarding → 4 Landing hero → 5 Brand settings → 6 Empty/error → 7 Pricing
+**Figma file:** `AMPLIFORGE DESIGN` (duplicate of Untitled UI PRO — never edit the master kit)
+
+**Pages (expected)**
+- `00 · Cover`
+- `01 · Foundations (Ampliforge)`
+- `02 · Components (mapped)`
+- `03 · App / Flows`
+- `04 · Marketing`
+- `05 · Visual Templates`
+- `06 · Engineering Handoff`
+- `99 · Archive`
+
+**How to use in Figma**
+1. Open the duplicated Ampliforge file (not Untitled master).
+2. Use **File** rail to see Pages (not Agents-only view).
+3. Paste **one prompt at a time** into the Design Agent.
+4. Approve, then ask Cursor for “Next”.
+
+**Prompt order**
+S0 Setup → Q Enterprise QA → 1 Review Studio → 2 Processing → 3 Onboarding → 4 Landing hero → 5 Brand → 6 Empty/Failed → 7 Pricing → 8 Visual Templates → 9 Landing below-fold → 10 Billing → 11 Handoff → 12 File QA
 
 ---
 
-## PROMPT 0 — System / Brand Bible (paste first, every session)
+## S0 — File setup (Untitled → Ampliforge)
 
 ```text
-You are a senior product designer building Ampliforge inside Figma using Untitled UI components wherever possible.
+You are setting up the Ampliforge product design file inside this Untitled UI kit. Do not redesign the whole product yet. First inspect what Untitled UI already gives us, then set up a clean Ampliforge working structure on top of it.
 
-PRODUCT
-Ampliforge is an enterprise YouTube content-repurposing SaaS. Creators paste a YouTube URL; the product transcribes the video and generates platform-native content (LinkedIn posts, X threads, email, hooks, summary, Instagram carousel, captions) plus brand-consistent visuals. Philosophy: AI multiplies creativity — humans review, personalize, and approve. Not a summarizer toy; not a cluttered social command center.
+CONTEXT
+Ampliforge is an enterprise YouTube → multi-platform content repurposing SaaS (LinkedIn, X threads, email, hooks, summary, Instagram carousel, captions + brand visuals). Dark-mode-first. Visual bar: Linear + Vercel + Fluent 2. Component kit: Untitled UI. Philosophy: AI multiplies creativity; humans review/approve. Avoid generic AI purple themes, emoji clutter, card-heavy heroes, and dashboard collage layouts.
 
-BENCHMARKS (visual + UX bar)
-- Feature analog: Castmagic
-- Processing / onboarding “wow”: Opus Clip
-- Approachability: Descript
-- Visual system: Linear + Vercel + Microsoft Fluent 2
-- Component kit: Untitled UI (Application UI for product; Marketing for landing)
+YOUR JOB RIGHT NOW (SETUP ONLY)
+1) Scan this Untitled UI file: identify the best Application UI foundations we should reuse (colors, type, buttons, inputs, tabs, sidebar, nav, modals, empty states, badges, avatars). Prefer existing Untitled components — do not invent a parallel kit.
 
-VISUAL DIRECTION — LOCKED
-- Dark-mode-first. Design dark as the primary source of truth; light mode only as a secondary variant if asked.
-- Brand colors (use as semantic tokens, not rainbow decoration):
-  - Primary blue: #0D66D0
-  - Accent purple: #9256D9 (use sparingly — never purple-on-white AI cliché)
-  - Signal crimson: #E34850 (errors / rare accent)
-  - Premium gold: #D4AF37 (Pro/upgrade moments only)
-- Surfaces (dark): background #0A0A0A, secondary #111111, surface #181818, elevated #202020
-- Text: primary #FAFAFA, secondary #CACACA, muted #8E8E8E
-- Borders: white at 8% opacity; subtle 4%
-- Radius: 6 / 12 / 20 / 28 — prefer 12 for controls, 20 for large panels
-- Elevation: soft layered shadows, restrained. No neon glow stacks, no multi-layer candy shadows.
-- Typography: expressive but enterprise. Prefer Untitled UI type styles. Display for marketing brand/hero only; UI uses clean sans (Untitled defaults). Avoid Inter-as-personality — Untitled’s type ramp is fine if consistently applied.
-- Motion (specify in annotations): fast 120ms, base 200ms, slow 320ms; ease standard. Motion communicates state (processing steps), not decoration.
+2) Create a new page structure with these pages:
+   - 00 · Cover
+   - 01 · Foundations (Ampliforge)
+   - 02 · Components (mapped)
+   - 03 · App / Flows
+   - 04 · Marketing
+   - 05 · Visual Templates (generated social assets)
+   - 06 · Engineering Handoff
+   - 99 · Archive
 
-HARD UI RULES (DO NOT VIOLATE)
-1. One composition per first viewport — not a dashboard collage on marketing surfaces.
-2. Brand first on marketing: “Ampliforge” is a hero-level signal, not a tiny nav word.
-3. Hero budget (landing): brand + one headline + one short supporting sentence + one CTA group + one dominant full-bleed visual plane. No stats strips, schedule widgets, promo chips, or floating badges on hero media.
-4. No hero overlays: no stickers, pills, or callout cards floating on the hero image.
-5. Cards: default NO cards. Cards only when they contain a real user interaction. Never cards in the hero. If removing border/shadow/radius doesn’t hurt understanding, remove it.
-6. One job per section: one purpose, one headline, usually one short supporting line.
-7. Reduce clutter: no pill clusters, emoji rows, icon grids as decoration, multi-competing text blocks.
-8. Avoid: cream/terracotta “AI brochure” look; broadsheet newspaper layouts; purple-to-indigo gradient themes as the whole identity; rounded-full pill spam; emoji as UI.
-9. Product chrome: clean sidebar + top bar like Linear; dense but calm; content review is the hero surface of the app.
-10. Always use Auto Layout. Name layers clearly (e.g. Review/Editor, Review/PlatformPreview). Create variants for Default / Hover / Loading / Empty / Error / Processing where relevant.
-11. Prefer Untitled UI components (Button, Input, Textarea, Tabs, Sidebar, Modal, Avatar, Badge, Empty state) restyled to Ampliforge colors — do not invent a parallel component language.
-12. Annotate spacing with 4/8pt grid. Desktop 1440 and mobile 390 for every primary screen.
+3) On “01 · Foundations (Ampliforge)”, create a token/style board that MAPS Untitled styles to Ampliforge:
+   Dark surfaces: bg #0A0A0A · secondary #111111 · surface #181818 · elevated #202020
+   Text: primary #FAFAFA · secondary #CACACA · muted #8E8E8E
+   Border: white 8% / 4%
+   Brand: blue #0D66D0 (primary) · purple #9256D9 (sparingly) · crimson #E34850 (danger/rare) · gold #D4AF37 (Pro only)
+   Radius: 6 / 12 / 20 / 28
 
-OUTPUT FORMAT FOR EACH REQUEST
-- Frame set at 1440×900 (desktop) and 390×844 (mobile) unless specified.
-- Cover / title frame with screen name and route (e.g. /projects/[id] Review Studio).
-- Component instances from Untitled UI where possible.
-- A short annotation sticky: “Implementation notes for engineering” listing components used and key tokens.
-- Do not generate random lorem dashboards unrelated to Ampliforge.
+4) On “02 · Components (mapped)”, place Untitled instances: Button primary/secondary/ghost/destructive, Input, Textarea, Tabs, Sidebar nav item, Badge, Modal, Empty state, Progress. Restyle to Ampliforge — do not rebuild from scratch.
+
+5) On “00 · Cover”: Ampliforge · Design System + Product · Untitled UI · Dark-first · checklist of priority screens.
+
+6) On “03 · App / Flows”, create empty 1440w placeholder frames:
+   Review Studio / Desktop · Processing / Desktop · Onboarding / Step 1–3 · Projects / Empty · Projects / Failed
+   Titles + one-line job only — do not fully design yet.
+
+7) Ignore unrelated layers (e.g. pawra-*). Leave them; put Ampliforge work on the new pages.
+
+CONSTRAINTS: Dark-first only; no emoji; no purple wash; Untitled as base; clean Dev Mode names.
+
+When finished, summarize pages created and components mapped.
 ```
 
 ---
 
-## PROMPT 1 — Review Studio (highest priority product screen)
+## Q — Enterprise quality pass (run after early screens exist)
 
 ```text
-Using the Ampliforge system rules already established, design the PRIMARY product screen: Content Review Studio.
+We are building Ampliforge as an enterprise-grade platform that must feel trustworthy for serious creators, marketing teams, and agencies for years — not a flashy AI demo.
 
+Audit and upgrade ALL existing Ampliforge frames on pages 00–04 to this bar. Keep layouts and IA — raise craft.
+
+ENTERPRISE QUALITY BAR
+- Calm authority (Linear / Vercel / Fluent 2). Confidence without hype.
+- Consistency: one spacing scale, one type ramp, one elevation system, accent rule (blue primary; purple rare; gold Pro/success only).
+- Accessibility: contrast AA+, focus states, hit targets ≥40px.
+- Density with clarity: remove decorative noise and redundant cards.
+- Trust cues: precise microcopy, no emoji, no “magic AI” language, no fake social proof in product UI.
+- States: Default / Hover / Focus / Loading / Empty / Error on critical flows.
+- Naming: production-ready for Dev Mode.
+- Untitled UI for app chrome; Ampliforge tokens everywhere.
+- Review Studio must feel like a daily professional tool.
+- Processing must feel operationally solid.
+
+Do NOT add new features or below-the-fold marketing.
+Summarize changes, then stop for approval.
+```
+
+---
+
+## 1 — Review Studio
+
+```text
+Setup is approved. Design Review Studio now.
+
+PAGE: 03 · App / Flows
+FRAME: Review Studio / Desktop + Review Studio / Mobile 390w
 ROUTE: /projects/[id]
-JOB: Creator reviews AI-generated content for one YouTube video — edit copy, see platform preview, see accompanying visual, accept or regenerate. This is the most important screen in the product. It must feel like a focused studio, NOT a settings dashboard and NOT a card grid of everything at once.
+JOB: Primary product screen. Edit copy, platform preview + visual, accept/regenerate. Focused studio, not a dashboard.
 
-CONTEXT DATA (use realistic sample content)
-- Video title: “10K Landing Pages Analysis — What Actually Converts”
-- Channel: GrowthLab
-- Duration: 18:42
-- Generated kit: LinkedIn long post, LinkedIn short, X thread (8 tweets), 3 hooks, Email, Carousel (10 slides), Summary, Caption
-- Brand colors applied to visuals: blue #0D66D0 on dark elevated surfaces
+USE Untitled UI + Ampliforge dark tokens. Brand blue #0D66D0. Auto Layout. No emoji.
 
-LAYOUT — DESKTOP 1440
-Three-region composition inside the existing Ampliforge app shell (left sidebar collapsed or compact + slim top bar with project title + credits + Export):
+SAMPLE: Video “10K Landing Pages Analysis — What Actually Converts” · GrowthLab · 18:42
+Pieces: LinkedIn long/short, X thread, Hooks, Email, Carousel, Summary, Caption
 
-1) LEFT RAIL (240–280px) — Piece navigator
-   - List of content pieces with type icon, short label, status chip (Ready / Edited / Accepted)
-   - Selected item clearly indicated with brand-blue accent bar (not a heavy card)
-   - Sticky footer actions: Accept all remaining · Export kit
-   - No emoji. Use Untitled icons / Lucide-like stroke icons.
+DESKTOP 1440 — 3 regions in app shell
+1) LEFT ~260px — piece navigator + status chips; footer Accept remaining · Export kit; selected = blue accent bar
+2) CENTER — editor hero: title, large textarea, Tone/Length/Formality/Regenerate/Improve selection, quiet strategic notes
+3) RIGHT ~380px — tabs Platform preview | Visual; previews for LinkedIn/X/IG/Email; Visual: mock asset + Alternative · Download PNG
 
-2) CENTER — Editor (flexible width, hero of the screen)
-   - Piece type + title
-   - Large editable text area (Untitled textarea / prose block) with comfortable line length
-   - Inline toolbar: Tone · Length · Formality · Regenerate piece · Contextual regenerate (“Improve selection”)
-   - Strategic notes as a quiet secondary block under the editor (not a bright callout card): 1–2 sentences why this angle was chosen
-   - Character/tweet count where relevant (thread)
+STATES: LinkedIn default · Thread · Carousel · Contextual regenerate popover · Regenerating loading · Mobile chips + bottom-sheet preview
 
-3) RIGHT — Preview column (360–400px)
-   - Tabs: Platform preview | Visual
-   - Platform preview: faithful chrome mock for the SELECTED type only
-     - LinkedIn: feed post preview
-     - X: thread stack preview
-     - Instagram: carousel slide stage with dots
-     - Email: simple client header + body
-   - Visual tab: generated image mock (stat highlight / quote card template), buttons: Alternative design · Download PNG
-   - No floating badges on the preview media.
-
-STATES TO DELIVER (separate frames)
-A) Default — LinkedIn long selected, preview LinkedIn, visual shown
-B) Thread selected — center shows tweet list editor; right shows thread preview
-C) Carousel selected — center slide list; right IG carousel preview
-D) Contextual regenerate — selection highlighted + small instruction popover (“Make this more conversational”)
-E) Loading regenerate — skeleton/progress in center only
-F) Empty visual — placeholder with Generate visual CTA
-G) Mobile 390 — stacked: piece selector as horizontal chips; editor full width; preview in bottom sheet pattern
-
-VISUAL RULES
-- Dark-first Ampliforge tokens
-- Untitled UI components for buttons, tabs, inputs, badges
-- Minimal dividers; avoid nested cards inside cards
-- Processing is NOT on this screen (separate screen)
-- Feels Linear/Vercel calm; Castmagic-useful; Opus-Clip quality on the preview side
-
-ANNOTATIONS
-List Untitled components used. Note route and state names for engineering handoff.
+CONSTRAINTS: No purple wash, no stickers, no stats widgets. When done, zoom to Review Studio / Desktop and summarize.
 ```
 
 ---
 
-## PROMPT 2 — Live processing “wow-moment”
+## 2 — Processing wow-moment
 
 ```text
-Design Ampliforge’s live processing experience — the emotional peak after pasting a YouTube URL.
+Review Studio approved. Design Processing wow-moment on 03 · App / Flows.
 
-ROUTE: overlay/state on /dashboard or full /projects/[id] while status=processing
-JOB: Make waiting feel intentional, educational, and premium (Opus Clip–grade), while reflecting real pipeline steps.
+FRAMES: Processing / Desktop + Mobile 390
+JOB: Opus Clip–grade waiting UX. One job — progress. Not a dashboard.
 
-PIPELINE STEPS (exact labels — use these)
-1. Extracting video metadata…
-2. Transcribing audio…
-3. Identifying key insights and frameworks…
-4. Generating platform-optimized content…
-5. Creating professional visuals… (may show as “Queued” if visuals not ready in product yet)
-6. Packaging your content suite…
+STEPS (exact):
+1 Extracting video metadata…
+2 Transcribing audio…
+3 Identifying key insights and frameworks…
+4 Generating platform-optimized content…
+5 Creating professional visuals…
+6 Packaging your content suite…
 
-DESKTOP COMPOSITION
-- Full-bleed dark atmosphere: subtle mesh gradient using brand blue/purple at very low opacity on #0A0A0A — not a purple rainbow.
-- Centered composition (one job): 
-  - Small Ampliforge wordmark
-  - Video thumbnail + title + duration for the source URL
-  - Vertical or horizontal step list with clear current step, completed check, upcoming muted
-  - Elapsed time + ETA (“About 1 min 40 sec remaining”)
-  - Secondary quiet action: “You can browse the library while this runs” (text button, not a competing CTA)
-- Optional: faint preview silhouettes of upcoming outputs morphing in the background at ≤10% opacity — no floating stickers, no emoji confetti, no “AI sparkle” overload. One restrained motion note: step check animates in 200ms.
+DESKTOP: full-bleed dark #0A0A0A + subtle mesh; centered wordmark, thumbnail+title, step list, ETA, quiet “Browse library while this runs”. No emoji/confetti/stickers.
 
-STATES
-A) Mid-run — step 3 active
-B) Almost done — step 5–6
-C) Success micro-moment — “14 pieces ready in 1:47” with single primary CTA “Open review studio”
-D) Failure — calm error, retry + support, no blamey copy
-E) Mobile 390 — same hierarchy, steps stacked, thumbnail smaller
+STATES: Mid-run (step 3) · Near end · Success “Open review studio” · Failed (Retry/Edit URL/Support) · Mobile
 
-RULES
-- No dashboard widgets on this screen
-- No pricing, no stats, no testimonials
-- Untitled progress / checklist components restyled
-- Gold accent only on the success checkmark if needed; otherwise brand blue
-
-ANNOTATIONS for motion durations and which step maps to engineering processing_jobs.step values: fetch, transcribe, insights, generate, visualize, finalize.
+When done, zoom to mid-run and summarize.
 ```
 
 ---
 
-## PROMPT 3 — First-run onboarding (3 steps)
+## 3 — Onboarding
 
 ```text
-Design Ampliforge first-run onboarding for new accounts after Clerk sign-up.
+Processing approved. Design Onboarding on 03 · App / Flows.
 
-ROUTE: /onboarding
-JOB: Orient the creator in under 90 seconds and start their first video — without feeling like a survey wall.
+FRAMES: Step 1, 2, 3 Desktop + Mobile each. ROUTE /onboarding
 
-STEPS (exactly 3)
-1) Welcome — “Ampliforge turns one video into a week of platform-native content.” Brand-level Ampliforge name. One supporting sentence. Primary CTA Continue. Secondary “Skip to dashboard”.
-2) How it works — show the 7 formats as a clean list or quiet grid WITHOUT card spam: LinkedIn, X thread, Email, Hook, Summary, Carousel, Caption. One line each. Continue.
-3) Your first video — large URL input: “Paste any YouTube URL”. Helper text. Primary “Generate my content”. Ghost “Try a sample video”.
+STEP 1 Welcome — Ampliforge brand signal, one headline, Continue + Skip to dashboard
+STEP 2 How it works — 7 formats (LinkedIn, X thread, Email, Hook, Summary, Carousel, Caption) quiet list, not card spam
+STEP 3 First video — large URL input, Generate my content, Try sample; loading + invalid URL states
 
-VISUAL
-- Dark-first, full viewport, minimal chrome (no app sidebar yet — or ultra-minimal top bar with logo only)
-- Untitled inputs/buttons
-- Step indicator 1/2/3 — understated dots or numbers, not rainbow progress
-- Avoid illustration clutter; if imagery, one abstract product atmosphere (mesh), not stock handshake photos
-
-VARIANTS
-- Desktop 1440 + Mobile 390 for all 3 steps
-- Step 3 validating URL (loading on button)
-- Step 3 error (invalid URL)
-
-Do not add: team invites, credit cards, long preference questionnaires, emoji celebrations.
+Minimal chrome (logo top bar only). Dark-first. No billing/survey walls. Summarize at Step 1 Desktop.
 ```
 
 ---
 
-## PROMPT 4 — Marketing landing hero + first fold only
+## 4 — Landing hero only
 
 ```text
-Design ONLY the first viewport of Ampliforge’s marketing landing page (/).
+Onboarding approved. Design Landing hero ONLY on 04 · Marketing.
 
-JOB: Brand-first conversion into “Paste YouTube URL” value demo.
+FRAMES: Landing / Hero Desktop 1440 + Mobile 390. ROUTE /
 
-HERO BUDGET (STRICT — include ONLY these)
-1. Ampliforge brand/name as hero-level signal (not just nav text)
-2. One headline
-3. One short supporting sentence
-4. One CTA group: primary = URL input + “See what Ampliforge creates” (or split: input + Generate); secondary text link Sign in
-5. One dominant full-bleed visual plane / atmosphere behind or as the entire background (product mood: dark studio, subtle blue mesh). NOT an inset rounded screenshot card. NOT a side-panel mockup collage. NOT a floating UI sticker pack.
+HERO BUDGET ONLY: Ampliforge brand as hero signal · one headline · one supporting sentence · URL input CTA + Sign in · one full-bleed atmosphere (not inset cards/stickers). Minimal nav OK.
 
-ALSO ALLOWED IN FIRST VIEWPORT
-- Minimal top nav: Logo · Pricing · Sign in · Get started (text, quiet)
+FORBIDDEN: stats, logo clouds, testimonials, feature rows, badges on media, purple wash, emoji.
 
-FORBIDDEN IN FIRST VIEWPORT
-- Stats counters, “this week” callouts, testimonial quotes, feature icon rows, pricing tables, schedule widgets, logo clouds, badges on the hero media, multiple headlines, cards.
-
-HEADLINE DIRECTION (pick one clear line; do not stack)
-Something in the spirit of: “One video. A week of platform-native content.” — enterprise confident, not hypey AI slang.
-
-BELOW THE FOLD — DO NOT DESIGN IN THIS PROMPT
-Stop at the first viewport. Engineering will request later sections separately.
-
-Deliver desktop 1440 and mobile 390. Untitled marketing patterns OK if they obey the hero rules above.
+Headline spirit: “One video. A week of platform-native content.”
+Stop at the fold. Summarize Hero Desktop.
 ```
 
 ---
 
-## PROMPT 5 — Brand settings
+## 5 — Brand settings
 
 ```text
-Design Ampliforge Brand Kit settings for creators.
+Design Settings / Brand (Desktop + Mobile) + states: Default · Unsaved · Saving · Extracting · Extract failed.
 
-ROUTE: /settings/brand (or Settings tab: Brand)
-JOB: Let users set visual identity and voice that flow into generated visuals and copy. Manual controls first; “Extract from YouTube channel” as secondary.
+ROUTE /settings/brand — brand as system of record for visuals + voice.
 
-SECTIONS (one column, calm — not a card maze)
-1) Brand preview strip — live miniature of a LinkedIn-style visual using current tokens
-2) Colors — primary, secondary, accent, background, text (swatches + hex; Untitled color field patterns)
-3) Typography — heading font / body font selects (Google font list simplified)
-4) Logo upload — dropzone, placement select (top-left, top-right, bottom-center)
-5) Voice — tone slider or select (formal ↔ conversational), emoji usage (none/minimal), CTA style, default hook style
-6) Actions — Save · Set as default · Extract from YouTube URL (secondary)
+Sections: Identity (name, logo, extract from YouTube) · Colors with AA warnings · Typography · Visual style (constrained) · Voice patterns (tone, emoji none/minimal, CTA, hook style) · Governance (default brand, org default disabled tooltip for Agency) · Save/Cancel + last saved.
 
-SHELL
-- Standard Ampliforge dashboard shell (sidebar + top bar)
-- Dark-first
-- Untitled form controls
-- Mobile: single column
-
-STATES: Default · Dirty unsaved · Saving · Extracting brand (progress) · Extract failed
-
-No marketplace templates, no social connect walls on this screen.
+Live preview sticky. Dashboard shell. Precise copy: “Save brand kit” not hype. Summarize Brand Desktop.
 ```
 
 ---
 
-## PROMPT 6 — Projects empty + failed processing
+## 6 — Projects empty + failed
 
 ```text
-Design two Ampliforge product states with Untitled empty-state patterns.
+Design Projects / Empty and Projects / Failed (Desktop + Mobile) on 03 · App / Flows.
 
-A) /projects EMPTY
-- Sidebar app shell
-- Quiet empty composition: short headline “No projects yet”, one sentence, primary CTA “New project” focusing a URL field or opening the AI command affordance
-- No illustrations of sad robots; optional minimal geometric mark
-- Secondary: “Seed demo projects” text action
+EMPTY /projects: “No projects yet”, URL-first CTA, secondary Load demo projects. No mascots.
 
-B) /projects/[id] FAILED
-- Review shell but content replaced by calm failure panel
-- Headline “Processing couldn’t finish”
-- Human-readable error (e.g. “We couldn’t fetch a transcript for this video”)
-- Actions: Retry · Edit URL · Contact support
-- Keep project title visible in top bar
+FAILED /projects/[id]: keep title; “Processing couldn’t finish”; specific error; Retry · Edit URL · Contact support; quiet Job ID/timestamp. No blamey copy.
 
-Desktop + mobile. Dark-first. No emoji. No blame.
+Match Review Studio chrome. Summarize Empty Desktop.
 ```
 
 ---
 
-## PROMPT 7 — Pricing page
+## 7 — Pricing
 
 ```text
-Design Ampliforge /pricing using Untitled UI pricing patterns, Ampliforge dark-first brand.
+Design /pricing on 04 · Marketing (Desktop + Mobile).
 
-JOB: Clear plan comparison for Starter / Pro / Agency. One job: choose a plan.
-
-RULES
-- Not the landing hero — this is a dedicated pricing page with simple header
-- Three plans max in a row on desktop; stack on mobile
-- Prefer subtle elevation over heavy cards; if cards are required for comparison, keep them quiet and consistent (interaction = selecting a plan)
-- Highlight Pro as recommended with brand-blue border — not gold scream unless Pro is “premium” badge in gold text
-- FAQ accordion below — short
-- CTA: Start free / Upgrade / Contact sales (Agency)
-
-Copy may be placeholder but structure must match SaaS pricing clarity. Include monthly toggle if Untitled has it; keep simple.
-
-Avoid: feature comparison of 40 rows, fake urgency timers, emoji tier names.
+Starter / Pro (Recommended) / Agency. Clear who-for lines, 5–7 features, precise CTAs (Start free / Upgrade / Contact sales). Optional monthly/annual toggle. FAQ 4–6. No fake logos/stats, no timers, no emoji tiers. Enterprise calm. Summarize Pricing Desktop.
 ```
 
 ---
 
-## PROMPT 8 — Visual asset templates (design system for generated images)
+## 8 — Visual Templates library
 
 ```text
-Design a Figma component set for Ampliforge GENERATED social visuals (these are outputs, not app chrome).
+Build page 05 · Visual Templates as Figma components (outputs, not app chrome).
 
-Create components at exact sizes:
-1) LinkedIn landscape 1200×627 — variants: Stat highlight, Quote card, Framework title, Question hook
-2) X / thread card 1200×675 (or 1:1 1080) — Stat callout, Quote, Checklist
-3) Instagram carousel slide 1080×1080 — Cover, Numbered value, Data point, Summary, CTA, Brand close
-4) Email header 600×200 — Brand banner + title
-
-Each variant:
-- Uses Ampliforge brand tokens as editable properties (primary color, logo optional, heading text, supporting text)
-- Dark and light brand background options
-- Safe margins; large type hierarchy; no tiny gray body walls
-- Looks like premium creator content, not Canva clutter
-- No watermarks saying “AI”
-
-Organize as a Figma component library page “Visual Templates / v1” with property controls documented for engineering (Satori will mirror these).
+LinkedIn 1200×627: Stat, Quote, Framework, Question hook
+X cards: Stat, Quote, Checklist (one consistent ratio)
+IG 1080×1080: Cover, Numbered, Data, Process, Summary, CTA/Brand close + example sequence
+Email 600×200: banner variants
+Properties: text, colors, logo on/off, dark/light bg
+Spec frame for engineering. Sample GrowthLab copy. Publication-ready, no AI watermark. Summarize cover/spec.
 ```
 
 ---
 
-## After the agent finishes — your checklist
+## 9 — Landing below-the-fold
 
-1. Replace any custom buttons/inputs with **Untitled UI** instances if the agent freestyled them.  
-2. Bind colors to your Ampliforge local styles (map to #0D66D0 / surfaces above).  
-3. Name frames: `Review/Desktop/LinkedIn`, `Processing/Success`, etc.  
-4. Add a sticky **Engineering notes** on each page.  
-5. Share the file link + which prompt numbers are approved.  
+```text
+Complete landing BELOW THE FOLD on 04 · Marketing. Do not restyle hero.
 
-I will implement approved frames in Next.js against `components/ui/*` and `docs/ENTERPRISE-UI.md` tokens.
+Sections in order: How it works (3 steps) · What you get (curated kit) · Review studio moment (one real product visual) · Brand system · For teams · Final CTA. Optional short FAQ. No invented testimonials/stats. Dark-first enterprise craft. Summarize structure.
+```
 
 ---
 
-## Prompt request template (ask me anytime)
+## 10 — Billing success + cancelled
 
-When you need a new screen, message me:
+```text
+Design /billing/success and /billing/cancelled (Desktop + Mobile).
 
-`Prompt for Figma Design Agent: [screen name] — [job] — [route] — [must include] — [must avoid]`
+Success: plan active, quiet details, Go to dashboard · Manage billing · receipt note.
+Cancelled: neutral, no plan change, Return to plans · Dashboard. No guilt/dark patterns/confetti.
+Summarize Success Desktop.
+```
 
-I will return another long prompt in the same format as above.
+---
+
+## 11 — Engineering handoff pack
+
+```text
+Create page 06 · Engineering Handoff with:
+Cover · Screen inventory (frame, route, desktop/mobile, ready) · Tokens map · Components map · Review Studio specs · Visual Templates specs · Build order · Do-not-build-yet list.
+
+Build order: Tokens/shell → Review Studio → Processing → Onboarding → Empty/Failed → Brand → Landing/Pricing → Billing → Visual rendering pipeline.
+Summarize Handoff Cover.
+```
+
+---
+
+## 12 — File QA (final)
+
+```text
+File QA across AMPLIFORGE DESIGN. No new screens.
+Verify page order, desktop+mobile, naming, tokens, Untitled usage, AA/states, no emoji/purple wash/fake proof, handoff accuracy, junk in Archive.
+Add sticky on Cover: READY FOR ENGINEERING — share file link.
+Reply FILE READY with checklist.
+```
+
+---
+
+## Cursor Desktop instructions
+
+When user says **“Next”** during Figma work: give the next prompt in order from this file (full `text` block, copy-paste ready).
+
+When user shares a **Figma link** + **“Start implementation”**: use `docs/ROADMAP.md` + this handoff order; implement in Next.js with CSS variables / `components/ui`.
+
+Related docs: `docs/README.md`, `docs/ROADMAP.md`, `docs/ENTERPRISE-UI.md`, `docs/VISION.md`.

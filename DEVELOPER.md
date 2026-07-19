@@ -3,6 +3,8 @@
 > **Read this first.** This document is the single source of truth for any developer or AI coding agent working on this repo. It covers what the product is, how it's built, what's done, what's in progress, and the exact conventions to follow.
 
 > **Platform build plan:** See [`docs/`](./docs/README.md) for the audited current state, unified roadmap (enterprise UI → Phase 3 harden → platform kit/visuals), and [API directory](./docs/API-DIRECTORY.md) (LIVE / PLANNED / DEFER). Do not treat the long-form vision inventory as a sprint backlog without those status tags.
+>
+> **Figma (Cursor Desktop):** [`docs/FIGMA-DESIGN-AGENT-PROMPTS.md`](./docs/FIGMA-DESIGN-AGENT-PROMPTS.md) · [`docs/FIGMA-WORKFLOW.md`](./docs/FIGMA-WORKFLOW.md) · `.cursor/rules/figma-design.mdc`
 
 ---
 
