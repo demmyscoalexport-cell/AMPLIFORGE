@@ -10,6 +10,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 **Read DEVELOPER.md first.** It contains the full architecture, stack, DB schema, pipeline explanation, and coding conventions. This file adds agent-specific rules on top of that.
 
+**Platform build + Figma prompts (Cursor Desktop):** Read [`docs/README.md`](./docs/README.md). For Figma Design Agent / Untitled UI work, use [`docs/FIGMA-DESIGN-AGENT-PROMPTS.md`](./docs/FIGMA-DESIGN-AGENT-PROMPTS.md) and [`docs/FIGMA-WORKFLOW.md`](./docs/FIGMA-WORKFLOW.md). When the user says “Next” during design, paste the next prompt from that pack. Rule file: `.cursor/rules/figma-design.mdc`.
+
 ## What this app does
 YouTube content repurposing SaaS. User pastes a YouTube URL → app transcribes + generates LinkedIn posts, threads, emails, hooks, summaries, carousels, and captions using Claude AI.
 

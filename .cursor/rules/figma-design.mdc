@@ -1,0 +1,17 @@
+---
+description: Ampliforge Figma Design Agent prompts and desktop handoff
+globs:
+alwaysApply: true
+---
+
+# Figma design workflow (Cursor Desktop)
+
+When the user is designing Ampliforge in Figma / Untitled UI / Design Agent:
+
+1. Read `docs/FIGMA-DESIGN-AGENT-PROMPTS.md` — source of truth for paste-ready prompts (S0→12).
+2. On “Next”, output the next prompt as a full fenced `text` block they can paste into Figma.
+3. On setup/find-pages issues: Pages live under the **File** rail (not Agents). Expected pages: `00 · Cover` … `06 · Engineering Handoff`.
+4. Do not invent a parallel design system — Untitled UI + Ampliforge tokens in that doc.
+5. When they share a Figma link and ask to implement: follow `docs/ROADMAP.md` + handoff build order; use CSS variables / `components/ui`; see `docs/ENTERPRISE-UI.md`.
+
+Related: `docs/FIGMA-WORKFLOW.md`, `docs/README.md`, `DEVELOPER.md`.
