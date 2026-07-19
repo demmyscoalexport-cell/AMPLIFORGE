@@ -29,6 +29,7 @@ Product + engineering blueprint aligned with the **live enterprise build** and t
 | 9 | [VISUALS.md](./VISUALS.md) | Brand + Satori plan |
 | 10 | [DATA-MODEL.md](./DATA-MODEL.md) | Schema evolution |
 | 11 | [ACCEPTANCE.md](./ACCEPTANCE.md) | Exit criteria per phase |
+| 12 | [FIGMA-DESIGN-AGENT-PROMPTS.md](./FIGMA-DESIGN-AGENT-PROMPTS.md) | Long prompts for Figma Design Agent + Untitled UI |
 
 ---
 
