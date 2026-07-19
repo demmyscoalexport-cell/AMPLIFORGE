@@ -2,6 +2,8 @@
 
 > **Read this first.** This document is the single source of truth for any developer or AI coding agent working on this repo. It covers what the product is, how it's built, what's done, what's in progress, and the exact conventions to follow.
 
+> **Platform build plan:** See [`docs/`](./docs/README.md) for the audited current state, unified roadmap (enterprise UI → Phase 3 harden → platform kit/visuals), and [API directory](./docs/API-DIRECTORY.md) (LIVE / PLANNED / DEFER). Do not treat the long-form vision inventory as a sprint backlog without those status tags.
+
 ---
 
 ## What Is Ampliforge?
@@ -276,7 +278,7 @@ Upstash Redis sliding-window limits applied in middleware for all `/api/v1/*` ro
 - [x] Carousel + caption generation
 
 ### Phase 2 — Sellable ✅ Done
-- [x] Stripe integration (plans + credit top-ups)
+- [x] Stripe integration (subscription Checkout + webhooks; **credit top-ups & Customer Portal → Phase 3 / docs E3**)
 - [x] Export/download endpoint (`GET /api/v1/projects/[id]/export`)
 - [x] Regenerate content endpoint (`POST /api/v1/projects/[id]/content/[contentId]/regenerate`)
 - [x] Rate limiting — Upstash Redis sliding window (60 req/min general, 10 req/min AI routes)
@@ -289,6 +291,10 @@ Upstash Redis sliding-window limits applied in middleware for all `/api/v1/*` ro
 - [ ] Brand voice training
 - [ ] Team workspaces
 - [ ] Admin dashboard
+- [ ] Stripe Customer Portal + credit top-up Checkout
+- [ ] Merge enterprise UI track (`docs/ENTERPRISE-UI.md` — tokens, onboarding, carousel tab)
+
+> Full sequencing (E0–E3, P0–P8), acceptance checklists, and API adoption: [`docs/ROADMAP.md`](./docs/ROADMAP.md).
 
 ---
 
