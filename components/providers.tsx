@@ -21,26 +21,26 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ClerkProvider
       appearance={{
         variables: {
-          colorPrimary: "#0D66D0",
-          colorText: "#fafafa",
-          colorBackground: "#181818",
-          colorInputBackground: "#0a0a0a",
-          colorInputText: "#fafafa",
-          colorTextSecondary: "#cacaca",
-          borderRadius: "12px",
-          fontFamily: "var(--font-geist-sans)",
+          colorPrimary: "#5B63D3",
+          colorText: "#EBEBEB",
+          colorBackground: "#1A1A1A",
+          colorInputBackground: "#212121",
+          colorInputText: "#EBEBEB",
+          colorTextSecondary: "#BBBBBB",
+          borderRadius: "10px",
+          fontFamily: "var(--font-inter)",
         },
         elements: {
           card: "bg-transparent shadow-none border-0",
           rootBox: "w-full",
           formButtonPrimary:
-            "bg-gradient-to-r from-[#0D66D0] to-[#9256D9] hover:opacity-95 normal-case font-medium",
+            "bg-brand-500 hover:bg-brand-600 normal-case font-medium rounded-[10px]",
           socialButtonsBlockButton:
-            "border border-[var(--border)] bg-[var(--bg-primary)] hover:bg-[var(--surface)] text-[var(--text-primary)] normal-case",
+            "border border-[var(--border)] bg-[var(--bg-primary)] hover:bg-[var(--surface)] text-[var(--text-primary)] normal-case rounded-[10px]",
           formFieldInput:
-            "bg-[var(--bg-primary)] border-[var(--border)] text-[var(--text-primary)] rounded-xl h-11",
+            "bg-[var(--input)] border-[var(--border)] text-[var(--text-primary)] rounded-[10px] h-11",
           formFieldLabel: "text-[var(--text-primary)] font-medium",
-          footerActionLink: "text-[var(--brand-blue)] hover:underline",
+          footerActionLink: "text-brand-500 hover:underline",
           headerTitle: "hidden",
           headerSubtitle: "hidden",
           dividerLine: "bg-[var(--border)]",
@@ -48,17 +48,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
         },
       }}
     >
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
         <QueryClientProvider client={client}>
           <TooltipProvider delayDuration={150} skipDelayDuration={50}>
             {children}
             <Toaster
-              position="bottom-right"
+              position="top-right"
               theme="system"
+              duration={5000}
               toastOptions={{
                 classNames: {
                   toast:
-                    "!bg-[var(--elevated)] !border !border-[var(--border)] !text-[var(--text-primary)] !shadow-card-lg !rounded-2xl",
+                    "!bg-[var(--elevated)] !border !border-[var(--border)] !text-[var(--text-primary)] !shadow-[var(--shadow-xl)] !rounded-[var(--radius-2xl)]",
                   title: "!text-sm !font-medium",
                   description: "!text-xs !text-[var(--text-muted)]",
                 },

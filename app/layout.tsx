@@ -1,55 +1,64 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ampliforge.app"),
   title: {
-    default: "AmpliForge — Turn One Video Into A Week Of Content",
-    template: "%s · AmpliForge",
+    default: "Ampliforge — Enterprise AI Content Repurposing",
+    template: "%s · Ampliforge",
   },
   description:
-    "AmpliForge uses AI to repurpose YouTube videos, podcasts, and webinars into LinkedIn posts, email sequences, X threads, and more — in seconds.",
+    "Paste a YouTube URL. Ampliforge transcribes, extracts insights, and generates LinkedIn posts, threads, carousels, emails, and more — in under 2 minutes.",
   keywords: [
     "AI content",
     "video repurposing",
-    "creator tools",
+    "enterprise content",
     "LinkedIn AI",
-    "podcast to text",
+    "YouTube to LinkedIn",
     "content automation",
   ],
-  authors: [{ name: "AmpliForge" }],
+  authors: [{ name: "Ampliforge" }],
   openGraph: {
-    title: "AmpliForge — AI Content Intelligence Platform",
-    description: "Turn one video into a week of content.",
+    title: "Ampliforge — Enterprise AI Content Repurposing",
+    description: "Turn one video into a complete multi-platform content package.",
     url: "https://ampliforge.app",
-    siteName: "AmpliForge",
+    siteName: "Ampliforge",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AmpliForge — Turn One Video Into A Week Of Content",
-    description: "AI-powered content repurposing for creators.",
+    title: "Ampliforge — Enterprise AI Content Repurposing",
+    description: "AI-powered content repurposing for modern teams.",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#FAFAFA" },
+    { media: "(prefers-color-scheme: dark)", color: "#0D0D0D" },
   ],
 };
 
@@ -60,9 +69,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full`}
+      className={`${sora.variable} ${inter.variable} ${jetbrains.variable} h-full dark`}
     >
-      <body className="min-h-full bg-background text-foreground antialiased">
+      <body className="min-h-full bg-background font-sans text-[var(--text-body)] antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
